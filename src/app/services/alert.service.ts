@@ -8,12 +8,7 @@ export class AlertService {
   private readonly alertCtrl = inject(AlertController);
   private readonly toastCtrl = inject(ToastController);
 
-  /**
-   * Exibe um modal de alerta informativo padrão.
-   * @param header Título do alerta.
-   * @param message Mensagem de texto a ser exibida.
-   * @param buttonText Texto do botão de fechamento.
-   */
+  // Mostra um alerta com botão de OK
   public async showInfo(header: string, message: string, buttonText = 'OK'): Promise<void> {
     const alert = await this.alertCtrl.create({
       header,
@@ -31,15 +26,7 @@ export class AlertService {
     await alert.present();
   }
 
-  /**
-   * Exibe um modal de confirmação com ação de Confirmar e Cancelar.
-   * @param header Título do alerta.
-   * @param message Mensagem de texto a ser exibida.
-   * @param onConfirm Callback executado ao confirmar.
-   * @param onCancel Callback executado ao cancelar.
-   * @param confirmText Texto do botão de confirmação.
-   * @param cancelText Texto do botão de cancelamento.
-   */
+  // Mostra um alerta de confirmação (Sim/Não)
   public async showConfirm(
     header: string,
     message: string,
@@ -73,12 +60,7 @@ export class AlertService {
     await alert.present();
   }
 
-  /**
-   * Exibe uma notificação do tipo Toast (alerta rápido no rodapé).
-   * @param message Mensagem a ser exibida no Toast.
-   * @param color Cor do Toast mapeada para as variáveis do Ionic ('success' | 'warning' | 'danger' | 'primary' | 'medium').
-   * @param duration Duração em milissegundos.
-   */
+  // Mostra um toast rápido na parte inferior da tela
   public async showToast(message: string, color: 'success' | 'warning' | 'danger' | 'primary' | 'medium' = 'success', duration = 3000): Promise<void> {
     const toast = await this.toastCtrl.create({
       message,
@@ -97,3 +79,4 @@ export class AlertService {
     await toast.present();
   }
 }
+

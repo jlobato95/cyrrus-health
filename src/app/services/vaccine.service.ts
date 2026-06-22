@@ -34,6 +34,36 @@ export interface Campaign {
   textColor: string;
 }
 
+// Funções auxiliares para cálculo dinâmico de datas com base no dia de hoje
+function formatarDataMock(data: Date): string {
+  const dia = String(data.getDate()).padStart(2, '0');
+  const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+  const mes = meses[data.getMonth()];
+  const ano = data.getFullYear();
+  return `${dia}/${mes}/${ano}`;
+}
+
+function adicionarMeses(data: Date, meses: number): Date {
+  const d = new Date(data.getTime());
+  d.setMonth(d.getMonth() + meses);
+  return d;
+}
+
+function calcularDiferencaDias(dataInicio: Date, dataFim: Date): number {
+  const diffTime = Math.abs(dataFim.getTime() - dataInicio.getTime());
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+}
+
+const HOJE = new Date();
+
+// Leo Silva (14 Meses de idade hoje)
+const dataNascLeo = new Date(HOJE.getFullYear(), HOJE.getMonth() - 14, HOJE.getDate());
+const leoVacina12m = adicionarMeses(dataNascLeo, 12);
+const delayDaysLeo = calcularDiferencaDias(leoVacina12m, HOJE);
+
+// Mia Silva (8 Meses de idade hoje)
+const dataNascMia = new Date(HOJE.getFullYear(), HOJE.getMonth() - 8, HOJE.getDate());
+
 // Dados iniciais padrão (fallbacks do localStorage)
 const DEFAULT_CHILDREN: Child[] = [
   {
@@ -64,7 +94,7 @@ const DEFAULT_VACCINES: Record<string, Vaccine[]> = {
       dose: 'Dose Única',
       milestone: 'Ao Nascer',
       status: 'applied',
-      dateText: 'Aplicada em 12/Out/2022',
+      dateText: `Aplicada em ${formatarDataMock(dataNascLeo)}`,
       dateIcon: 'calendar_today',
     },
     {
@@ -73,7 +103,7 @@ const DEFAULT_VACCINES: Record<string, Vaccine[]> = {
       dose: '1ª Dose',
       milestone: 'Ao Nascer',
       status: 'applied',
-      dateText: 'Aplicada em 12/Out/2022',
+      dateText: `Aplicada em ${formatarDataMock(dataNascLeo)}`,
       dateIcon: 'calendar_today',
     },
     {
@@ -82,9 +112,9 @@ const DEFAULT_VACCINES: Record<string, Vaccine[]> = {
       dose: '1ª Dose (SCR)',
       milestone: '12 Meses',
       status: 'alert',
-      dateText: 'Venceu em: 12/Out/2023',
+      dateText: `Venceu em: ${formatarDataMock(leoVacina12m)}`,
       dateIcon: 'event_busy',
-      delayDays: 12,
+      delayDays: delayDaysLeo,
     },
     {
       id: 'hepa-2',
@@ -92,9 +122,9 @@ const DEFAULT_VACCINES: Record<string, Vaccine[]> = {
       dose: '2ª Dose',
       milestone: '12 Meses',
       status: 'alert',
-      dateText: 'Venceu em: 12/Out/2023',
+      dateText: `Venceu em: ${formatarDataMock(leoVacina12m)}`,
       dateIcon: 'event_busy',
-      delayDays: 12,
+      delayDays: delayDaysLeo,
     },
     {
       id: 'dtp-ref',
@@ -102,7 +132,7 @@ const DEFAULT_VACCINES: Record<string, Vaccine[]> = {
       dose: '1º Reforço',
       milestone: '15 Meses',
       status: 'pending',
-      dateText: 'Agendado para 12/Jan/2024',
+      dateText: `Agendado para ${formatarDataMock(adicionarMeses(dataNascLeo, 15))}`,
       dateIcon: 'calendar_month',
     },
     {
@@ -111,7 +141,7 @@ const DEFAULT_VACCINES: Record<string, Vaccine[]> = {
       dose: '1º Reforço',
       milestone: '15 Meses',
       status: 'pending',
-      dateText: 'Agendado para 12/Jan/2024',
+      dateText: `Agendado para ${formatarDataMock(adicionarMeses(dataNascLeo, 15))}`,
       dateIcon: 'calendar_month',
     },
   ],
@@ -122,7 +152,7 @@ const DEFAULT_VACCINES: Record<string, Vaccine[]> = {
       dose: 'Dose Única',
       milestone: 'Ao Nascer',
       status: 'applied',
-      dateText: 'Aplicada em 10/Out/2023',
+      dateText: `Aplicada em ${formatarDataMock(dataNascMia)}`,
       dateIcon: 'calendar_today',
     },
     {
@@ -131,7 +161,7 @@ const DEFAULT_VACCINES: Record<string, Vaccine[]> = {
       dose: '1ª Dose',
       milestone: 'Ao Nascer',
       status: 'applied',
-      dateText: 'Aplicada em 10/Out/2023',
+      dateText: `Aplicada em ${formatarDataMock(dataNascMia)}`,
       dateIcon: 'calendar_today',
     },
     {
@@ -140,7 +170,7 @@ const DEFAULT_VACCINES: Record<string, Vaccine[]> = {
       dose: '1ª Dose',
       milestone: '2 Meses',
       status: 'applied',
-      dateText: 'Aplicada em 10/Dez/2023',
+      dateText: `Aplicada em ${formatarDataMock(adicionarMeses(dataNascMia, 2))}`,
       dateIcon: 'calendar_today',
     },
     {
@@ -149,7 +179,7 @@ const DEFAULT_VACCINES: Record<string, Vaccine[]> = {
       dose: '1ª Dose',
       milestone: '2 Meses',
       status: 'applied',
-      dateText: 'Aplicada em 10/Dez/2023',
+      dateText: `Aplicada em ${formatarDataMock(adicionarMeses(dataNascMia, 2))}`,
       dateIcon: 'calendar_today',
     },
     {
@@ -158,7 +188,7 @@ const DEFAULT_VACCINES: Record<string, Vaccine[]> = {
       dose: '2ª Dose',
       milestone: '4 Meses',
       status: 'applied',
-      dateText: 'Aplicada em 10/Fev/2024',
+      dateText: `Aplicada em ${formatarDataMock(adicionarMeses(dataNascMia, 4))}`,
       dateIcon: 'calendar_today',
     },
     {
@@ -167,7 +197,7 @@ const DEFAULT_VACCINES: Record<string, Vaccine[]> = {
       dose: '2ª Dose',
       milestone: '4 Meses',
       status: 'applied',
-      dateText: 'Aplicada em 10/Fev/2024',
+      dateText: `Aplicada em ${formatarDataMock(adicionarMeses(dataNascMia, 4))}`,
       dateIcon: 'calendar_today',
     },
     {
@@ -176,7 +206,7 @@ const DEFAULT_VACCINES: Record<string, Vaccine[]> = {
       dose: '3ª Dose',
       milestone: '6 Meses',
       status: 'pending',
-      dateText: 'Agendado para 10/Jul/2024',
+      dateText: `Agendado para ${formatarDataMock(adicionarMeses(dataNascMia, 9))}`,
       dateIcon: 'calendar_month',
     },
   ],
@@ -185,7 +215,7 @@ const DEFAULT_VACCINES: Record<string, Vaccine[]> = {
 const DEFAULT_CAMPAIGNS: Campaign[] = [
   {
     id: 'campanha-gripe',
-    title: 'A Temporada de Gripe 2024 Chegou',
+    title: 'A Temporada de Gripe 2026 Chegou',
     description: 'Proteja sua família contra as cepas mais recentes. A vacina anual contra a gripe é recomendada para todas as crianças a partir de 6 meses.',
     dateRange: '15 Abr - 30 Jun',
     targetAge: '6+ meses',
@@ -209,7 +239,7 @@ const DEFAULT_CAMPAIGNS: Campaign[] = [
     id: 'campanha-polio',
     title: 'Dia Nacional da Pólio',
     description: 'Um esforço nacional de um único dia para garantir que todas as crianças estejam protegidas contra a Pólio.',
-    dateRange: '24 de Outubro, 2024',
+    dateRange: '24 de Outubro, 2026',
     targetAge: '1 - 5 anos',
     status: 'upcoming',
     icon: 'child_care',
@@ -229,45 +259,48 @@ const DEFAULT_CAMPAIGNS: Campaign[] = [
   },
 ];
 
+
+const DATA_VERSION = 'v2_dinamica';
+
 @Injectable({
   providedIn: 'root',
 })
 export class VaccineService {
   private readonly storageService = inject(StorageService);
 
-  // Lista de crianças (dependentes) inicializada do Storage ou do default
+  // Armazena a lista de crianças
   private readonly childrenList = signal<Child[]>(
     this.storageService.get<Child[]>(STORAGE_KEYS.CHILDREN) ?? DEFAULT_CHILDREN
   );
 
-  // Criança ativa selecionada inicializada do Storage ou do default
+  // Armazena o ID da criança ativa selecionada
   private readonly activeChildId = signal<string>(
     this.storageService.get<string>(STORAGE_KEYS.ACTIVE_CHILD_ID) ?? DEFAULT_ACTIVE_CHILD_ID
   );
 
-  // Mapeamento de vacinas por ID de criança inicializado do Storage ou do default
+  // Armazena as vacinas de cada criança
   private readonly vaccinesMap = signal<Record<string, Vaccine[]>>(
     this.storageService.get<Record<string, Vaccine[]>>(STORAGE_KEYS.VACCINES) ?? DEFAULT_VACCINES
   );
 
-  // Lista de campanhas ativas no sistema (estática)
+  // Lista de campanhas de vacinação
   private readonly campaignsList = signal<Campaign[]>(DEFAULT_CAMPAIGNS);
 
-  // Signals Públicos (Expostos como read-only)
+  // Signals para leitura externa
   public readonly children = this.childrenList.asReadonly();
   public readonly campaigns = this.campaignsList.asReadonly();
 
-  // Computado: Criança ativa baseada no ID
+  // Retorna os dados da criança selecionada
   public readonly activeChild = computed(() => {
     return this.children().find((c) => c.id === this.activeChildId()) ?? this.children()[0];
   });
 
-  // Computado: Vacinas da criança ativa
+  // Retorna as vacinas da criança selecionada
   public readonly activeChildVaccines = computed(() => {
     return this.vaccinesMap()[this.activeChildId()] ?? [];
   });
 
-  // Computado: Resumo de métricas para a criança ativa
+  // Calcula o total de vacinas por status (aplicadas, pendentes, atrasadas)
   public readonly activeChildMetrics = computed(() => {
     const vaccines = this.activeChildVaccines();
     const applied = vaccines.filter((v) => v.status === 'applied').length;
@@ -277,16 +310,21 @@ export class VaccineService {
     return { applied, pending, alert };
   });
 
-  // Construtor para garantir a gravação inicial dos dados se o storage estiver vazio
   constructor() {
-    if (!this.storageService.get<Child[]>(STORAGE_KEYS.CHILDREN)) {
+    const currentVersion = this.storageService.get<string>('cyrrus_data_version');
+    const storedChildren = this.storageService.get<Child[]>(STORAGE_KEYS.CHILDREN);
+    const storedVaccines = this.storageService.get<Record<string, Vaccine[]>>(STORAGE_KEYS.VACCINES);
+
+    // Inicializa ou reseta os dados caso a versão mude ou esteja vazio
+    if (!storedChildren || !storedVaccines || currentVersion !== DATA_VERSION) {
       this.storageService.set(STORAGE_KEYS.CHILDREN, DEFAULT_CHILDREN);
-    }
-    if (!this.storageService.get<string>(STORAGE_KEYS.ACTIVE_CHILD_ID)) {
       this.storageService.set(STORAGE_KEYS.ACTIVE_CHILD_ID, DEFAULT_ACTIVE_CHILD_ID);
-    }
-    if (!this.storageService.get<Record<string, Vaccine[]>>(STORAGE_KEYS.VACCINES)) {
       this.storageService.set(STORAGE_KEYS.VACCINES, DEFAULT_VACCINES);
+      this.storageService.set('cyrrus_data_version', DATA_VERSION);
+      
+      this.childrenList.set(DEFAULT_CHILDREN);
+      this.activeChildId.set(DEFAULT_ACTIVE_CHILD_ID);
+      this.vaccinesMap.set(DEFAULT_VACCINES);
     }
   }
 

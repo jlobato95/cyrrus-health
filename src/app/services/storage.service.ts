@@ -4,10 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class StorageService {
-  /**
-   * Obtém um item do localStorage e realiza o parse de JSON.
-   * @param key Chave de busca configurada em STORAGE_KEYS.
-   */
+  // Pega um item do localStorage e converte de JSON
   public get<T>(key: string): T | null {
     try {
       const data = localStorage.getItem(key);
@@ -18,11 +15,7 @@ export class StorageService {
     }
   }
 
-  /**
-   * Salva um item no localStorage convertendo-o para string JSON.
-   * @param key Chave de armazenamento configurada em STORAGE_KEYS.
-   * @param value Dado a ser persistido.
-   */
+  // Salva um item no localStorage convertendo para JSON
   public set<T>(key: string, value: T): void {
     try {
       localStorage.setItem(key, JSON.stringify(value));
@@ -31,10 +24,7 @@ export class StorageService {
     }
   }
 
-  /**
-   * Remove uma chave do localStorage.
-   * @param key Chave configurada em STORAGE_KEYS.
-   */
+  // Remove um item do localStorage
   public remove(key: string): void {
     try {
       localStorage.removeItem(key);
@@ -43,9 +33,7 @@ export class StorageService {
     }
   }
 
-  /**
-   * Limpa todo o localStorage.
-   */
+  // Limpa o localStorage
   public clear(): void {
     try {
       localStorage.clear();
@@ -54,3 +42,4 @@ export class StorageService {
     }
   }
 }
+

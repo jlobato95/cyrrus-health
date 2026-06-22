@@ -1,0 +1,124 @@
+<ion-content [fullscreen]="true">
+  <div class="dashboard-container">
+    <!-- Header Section -->
+    <header class="dashboard-header">
+      <p>Visão Geral do Status</p>
+      <h2>Olá, Sarah. Aqui está o resumo de saúde do {{ activeChild().name }}.</h2>
+    </header>
+
+    <!-- Bento Grid (Metrics) -->
+    <section class="metrics-grid">
+      <!-- Applied -->
+      <div class="metric-card applied">
+        <div class="card-top">
+          <div class="icon-wrapper">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+          </div>
+          <div class="metric-value">{{ metrics().applied }}</div>
+        </div>
+        <h3>Vacinas Aplicadas</h3>
+        <p>Todas em dia para a idade.</p>
+      </div>
+
+      <!-- Pending -->
+      <div class="metric-card pending">
+        <div class="card-top">
+          <div class="icon-wrapper">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">schedule</span>
+          </div>
+          <div class="metric-value">{{ metrics().pending }}</div>
+        </div>
+        <h3>Doses Pendentes</h3>
+        <p>Agendadas nos próximos meses.</p>
+      </div>
+
+      <!-- Overdue -->
+      <div class="metric-card alert">
+        <div class="card-top">
+          <div class="icon-wrapper">
+            <span class="material-symbols-outlined">warning</span>
+          </div>
+          <div class="metric-value">{{ metrics().alert }}</div>
+        </div>
+        <h3>Atrasadas</h3>
+        <p>{{ metrics().alert > 0 ? 'Requer atenção imediata.' : 'Nenhuma vacina atrasada.' }}</p>
+      </div>
+    </section>
+
+    <!-- Details Columns -->
+    <div class="details-layout">
+      <!-- Left Column: Spotlight Action -->
+      <div class="spotlight-section">
+        <h3>Destaque: Próxima Ação</h3>
+
+        @if (spotlightVaccine(); as vaccine) {
+          <div class="spotlight-card">
+            <div class="spotlight-image-container">
+              <img [ngSrc]="'https://lh3.googleusercontent.com/aida-public/AB6AXuDP8pdo54XpAJKFxFFw6yJQIgl8Ho46YFkZ2XdvOjw0wjWJwd5a034eVJ3mzlLG8kDBtntgbl1XJnCEktJHTQ4nlthzdo2TtutbbosWGcpyaqnXVCpanl3YIDKVyrfDbxuBL_bJI2nwtpYuzUXosGlhTX_JfXC79wcpg4JjjI7BJaWngPFqs-x348m8pBRK4f_MfT_yo6BJOOucV2g23NNngpBwd4b5NlfsKxCOGzuVY7_2qPhkGI_txpbWjgurZKN8Fmok6fMeFr4b'" width="160" height="160" alt="Clínica médica acolhedora" priority />
+            </div>
+            <div class="spotlight-content">
+              <div class="badge" [class.alert]="vaccine.status === 'alert'" [class.pending]="vaccine.status === 'pending'">
+                <span class="material-symbols-outlined">{{ vaccine.status === 'alert' ? 'warning' : 'schedule' }}</span>
+                {{ vaccine.status === 'alert' ? 'Atrasada' : 'Agendada' }} {{ vaccine.delayDays ? 'há ' + vaccine.delayDays + ' dias' : '' }}
+              </div>
+              <h4>{{ vaccine.name }} ({{ vaccine.dose }})</h4>
+              <p>Proteção essencial contra agentes patogênicos no estágio de desenvolvimento de {{ activeChild().age }}.</p>
+              
+              <div class="spotlight-actions">
+                <ion-button (click)="applyVaccine(vaccine.id)" color="success" expand="block" shape="round">
+                  Marcar como Aplicada
+                </ion-button>
+                <ion-button routerLink="/timeline" fill="clear" color="dark" expand="block">
+                  Ver Detalhes
+                </ion-button>
+              </div>
+            </div>
+          </div>
+        } @else {
+          <div class="spotlight-card">
+            <div class="spotlight-content" style="text-align: center; padding: 24px 0;">
+              <span class="material-symbols-outlined text-primary text-5xl mb-3" style="font-variation-settings: 'FILL' 1;">done_all</span>
+              <h4>Todas as vacinas em dia!</h4>
+              <p>Ótimo trabalho! A saúde do seu dependente está totalmente em dia. Não há ações pendentes.</p>
+              <ion-button routerLink="/timeline" fill="outline" color="primary" shape="round">
+                Ver Carteira de Vacinação
+              </ion-button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Right Column: Recent Timeline Activity -->
+      <div class="activity-column">
+        <section class="activity-section">
+          <div class="activity-header">
+            <h3>Atividade Recente</h3>
+            <ion-button fill="clear" color="primary" routerLink="/timeline">Ver Todas</ion-button>
+          </div>
+
+          <div class="activity-timeline">
+            @for (item of recentActivity(); track item.id) {
+              <div class="timeline-item">
+                <div class="dot" [class.pending]="item.status === 'pending'" [class.alert]="item.status === 'alert'"></div>
+                <div class="timeline-content">
+                  <h4>{{ item.name }} ({{ item.dose }})</h4>
+                  <p>{{ item.status === 'applied' ? 'Aplicada' : item.status === 'pending' ? 'Consulta agendada' : 'Atrasada' }}</p>
+                  
+                  @if (item.status === 'applied') {
+                    <span class="time">{{ item.dateText }}</span>
+                  } @else if (item.status === 'pending') {
+                    <span class="next-time">Próxima: {{ item.dateText.replace('Agendado para ', '') }}</span>
+                  } @else {
+                    <span class="time text-danger">{{ item.dateText }}</span>
+                  }
+                </div>
+              </div>
+            } @empty {
+              <p style="text-align: center; font-size: 14px; opacity: 0.6; padding: 24px 0;">Nenhuma atividade recente.</p>
+            }
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</ion-content>

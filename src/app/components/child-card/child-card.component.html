@@ -1,0 +1,23 @@
+<div class="child-card" [class.active-profile]="isActive" (click)="onCardClick()">
+  @if (isActive) {
+    <span class="active-badge">Ativo</span>
+  }
+  
+  <div class="avatar-wrapper">
+    <img [ngSrc]="child.avatarUrl" width="96" height="96" [alt]="'Foto de ' + child.name" priority />
+  </div>
+
+  <h3>{{ child.name }}</h3>
+  <p class="age-text">{{ child.age }}</p>
+
+  <!-- Status Indicator -->
+  <div class="status-indicator" 
+       [class.status-applied]="child.statusType === 'applied'"
+       [class.status-pending]="child.statusType === 'pending'"
+       [class.status-alert]="child.statusType === 'alert'">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">
+      {{ child.statusType === 'applied' ? 'check_circle' : child.statusType === 'alert' ? 'warning' : 'schedule' }}
+    </span>
+    <span class="status-msg">{{ child.statusText }}</span>
+  </div>
+</div>

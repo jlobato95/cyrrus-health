@@ -1,0 +1,55 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* Forçar Light Mode do Stitch */
+/* @import '@ionic/angular/css/palettes/dark.system.css'; */
+
+/* Reset e correções de layout para ion-content */
+ion-content {
+  --background: var(--cyrrus-bg-off-white) !important;
+  background-color: var(--cyrrus-bg-off-white) !important;
+
+  /* Remove margens e permite que o ion-content ocupe 100% da tela de forma estável */
+  margin: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+
+  /* Espaçamento interno no celular: topo para o top-nav, base para o bottom-nav */
+  --padding-top: 80px !important;
+  --padding-bottom: 80px !important;
+  --padding-start: 16px !important;
+  --padding-end: 16px !important;
+
+  @media (min-width: 768px) {
+    /* Espaçamento interno no desktop: topo para o top-nav, start para a side-nav */
+    --padding-top: 88px !important;
+    --padding-bottom: 24px !important;
+    --padding-start: 280px !important; /* 256px da side-nav + 24px de respiro */
+    --padding-end: 24px !important;
+  }
+}
+

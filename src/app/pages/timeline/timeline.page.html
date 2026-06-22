@@ -1,0 +1,55 @@
+<ion-content [fullscreen]="true">
+  <div class="timeline-container">
+    <!-- Header Card -->
+    <div class="timeline-header-card">
+      <div class="child-info-wrapper">
+        <div class="avatar-container">
+          <img [src]="activeChild().avatarUrl" [alt]="'Foto de ' + activeChild().name" />
+          <div class="verified-badge">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified</span>
+          </div>
+        </div>
+        <div class="text-details">
+          <h1>Jornada do {{ activeChild().name }}</h1>
+          <p>{{ activeChild().age }} • {{ activeChild().statusText }}</p>
+        </div>
+      </div>
+      
+      <ion-button fill="outline" color="primary" shape="round" (click)="downloadPdf()">
+        <span class="material-symbols-outlined" style="margin-right: 8px;">picture_as_pdf</span>
+        Baixar PDF
+      </ion-button>
+    </div>
+
+    <!-- Timeline List -->
+    <div class="timeline-list">
+      @for (group of groupedVaccines(); track group.milestone) {
+        <div class="milestone-group">
+          <!-- Milestone Header -->
+          <div class="milestone-title-row">
+            <div class="milestone-icon-wrapper" [class.pending]="group.status === 'pending'" [class.alert]="group.status === 'alert'">
+              <span class="material-symbols-outlined" [style.font-variation-settings]="group.status === 'applied' ? '\'FILL\' 1' : ''">
+                {{ group.icon }}
+              </span>
+            </div>
+            <h2>{{ group.milestone }}</h2>
+          </div>
+
+          <!-- Cards Grid for Milestone -->
+          <div class="cards-grid">
+            @for (vaccine of group.items; track vaccine.id) {
+              <app-vaccine-card 
+                [vaccine]="vaccine" 
+                (applied)="applyVaccine($event)">
+              </app-vaccine-card>
+            }
+          </div>
+        </div>
+      } @empty {
+        <p style="text-align: center; font-size: 16px; opacity: 0.6; padding: 48px 0;">
+          Nenhum registro de vacinação encontrado para esta criança.
+        </p>
+      }
+    </div>
+  </div>
+</ion-content>

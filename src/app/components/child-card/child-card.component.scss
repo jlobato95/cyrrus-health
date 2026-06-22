@@ -1,0 +1,120 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.child-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(71, 60, 51, 0.06);
+  border: 1px solid var(--cyrrus-surface-container-high);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(71, 60, 51, 0.1);
+    border-color: rgba(171, 194, 112, 0.4);
+  }
+
+  &.active-profile {
+    border: 2px solid var(--ion-color-primary);
+    box-shadow: 0 8px 24px rgba(171, 194, 112, 0.15);
+  }
+
+  .active-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background-color: rgba(171, 194, 112, 0.15);
+    color: var(--cyrrus-status-applied);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    letter-spacing: 0.05em;
+  }
+
+  .avatar-wrapper {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--cyrrus-surface-container-high);
+    box-shadow: 0 2px 8px rgba(71, 60, 51, 0.08);
+    margin-bottom: 16px;
+    transition: transform 0.3s ease;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &:hover .avatar-wrapper {
+    transform: scale(1.05);
+  }
+
+  &.active-profile .avatar-wrapper {
+    border-color: var(--ion-color-primary);
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ion-color-dark);
+    margin: 0 0 4px 0;
+  }
+
+  .age-text {
+    font-size: 14px;
+    color: var(--ion-color-dark);
+    opacity: 0.6;
+    margin: 0 0 16px 0;
+    font-weight: 600;
+  }
+
+  .status-indicator {
+    width: 100%;
+    background-color: var(--cyrrus-surface-container-low);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: auto;
+
+    span {
+      font-size: 18px;
+    }
+
+    .status-msg {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ion-color-dark);
+      line-height: 1.2;
+    }
+
+    &.status-applied {
+      color: var(--cyrrus-status-applied);
+    }
+    
+    &.status-pending {
+      color: var(--cyrrus-status-pending);
+    }
+
+    &.status-alert {
+      color: var(--ion-color-tertiary);
+    }
+  }
+}

@@ -1,0 +1,99 @@
+<ion-content [fullscreen]="true">
+  <div class="campaigns-container">
+    <!-- Header -->
+    <header class="campaigns-header">
+      <h1>Campanhas Ativas</h1>
+      <p>Fique atualizado sobre os esforços de vacinação nacionais e regionais para manter sua família protegida.</p>
+    </header>
+
+    <!-- Featured Banner -->
+    @if (featuredCampaign(); as campaign) {
+      <section class="featured-campaign">
+        <div class="featured-content">
+          <span class="featured-badge">Destaque</span>
+          <h2>{{ campaign.title }}</h2>
+          <p>{{ campaign.description }}</p>
+          
+          <div class="meta-info">
+            <div class="meta-item">
+              <span class="material-symbols-outlined">calendar_today</span>
+              {{ campaign.dateRange }}
+            </div>
+            <div class="meta-item">
+              <span class="material-symbols-outlined">group</span>
+              {{ campaign.targetAge }}
+            </div>
+          </div>
+
+          <ion-button fill="solid" shape="round" (click)="findClinics()">
+            <span class="material-symbols-outlined" style="margin-right: 8px;">location_on</span>
+            Encontrar Clínica Mais Próxima
+          </ion-button>
+        </div>
+
+        <div class="featured-icon">
+          <div class="icon-backdrop">
+            <span class="material-symbols-outlined">vaccines</span>
+          </div>
+        </div>
+      </section>
+    }
+
+    <!-- Alerts section -->
+    <section class="alerts-section">
+      <h3>
+        <span class="material-symbols-outlined alert-icon" style="font-variation-settings: 'FILL' 1;">warning</span>
+        Alertas de Elegibilidade Familiar
+      </h3>
+
+      <div class="alerts-grid">
+        @for (alert of eligibilityAlerts(); track alert.id) {
+          <div class="alert-card">
+            <div class="alert-avatar">
+              <img [ngSrc]="alert.avatar" width="48" height="48" [alt]="'Foto de ' + alert.childName" />
+            </div>
+            <div class="alert-info">
+              <h4>{{ alert.childName }} ({{ alert.childAge }})</h4>
+              <p [innerHTML]="alert.message"></p>
+              <a [routerLink]="['/timeline']" (click)="selectChild(alert.childId)">Ver Detalhes</a>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Active Campaigns Grid -->
+    <section class="active-campaigns-section">
+      <h3>Todas as Campanhas Ativas</h3>
+
+      <div class="campaigns-grid">
+        @for (campaign of campaigns(); track campaign.id) {
+          <div class="campaign-card">
+            <div class="card-banner" [className]="'card-banner ' + campaign.bgColor + ' ' + campaign.textColor">
+              <span class="material-symbols-outlined">{{ campaign.icon }}</span>
+              <div class="status-tag">
+                {{ campaign.status === 'active' ? 'Ativa' : 'Em Breve' }}
+              </div>
+            </div>
+
+            <div class="card-body">
+              <h4>{{ campaign.title }}</h4>
+              <p>{{ campaign.description }}</p>
+
+              <div class="campaign-meta">
+                <div class="meta-row">
+                  <span class="material-symbols-outlined">calendar_month</span>
+                  {{ campaign.dateRange }}
+                </div>
+                <div class="meta-row">
+                  <span class="material-symbols-outlined">escalator_warning</span>
+                  {{ campaign.targetAge }}
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  </div>
+</ion-content>

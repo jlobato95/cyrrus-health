@@ -1,0 +1,121 @@
+<ion-app>
+  <div class="app-wrapper">
+    <!-- TopNavBar (Celular e Tablet) -->
+    <nav class="top-nav mobile-only-nav" aria-label="Navegação Superior Celular">
+      <div class="logo-area">
+        <img src="https://lh3.googleusercontent.com/aida/AP1WRLviobrPONQZvleMjNALNqEbUa0wynTwvPACcQCEwvl-Wl3_WVdksVHe4QGlrHV53KGCNJYi4dKvEcybyH4_ZKvkPprgWoThCQki02a18RWrFLCQd704jI670XEoFyv2DyeKPcasSpRwOJiamrFXPlEuEXYXJ93bwZ_Qhk2tap5Hxn7wTZ2Pd8mXqT5zFScBPfs3Sp47FfU3kZXQxR-qb0U2xeFDyX36eKvL_HSngBVaJloSFPKGW8J8vLv9" alt="Cyrrus Health Logo" />
+      </div>
+      <div class="actions-area">
+        <button aria-label="Notificações" (click)="showNotifications()">
+          <span class="material-symbols-outlined">notifications</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- SideNavBar (Desktop/Web) -->
+    <aside class="side-nav desktop-only-nav" aria-label="Navegação Lateral">
+      <div class="brand-logo">
+        <img src="https://lh3.googleusercontent.com/aida/AP1WRLviobrPONQZvleMjNALNqEbUa0wynTwvPACcQCEwvl-Wl3_WVdksVHe4QGlrHV53KGCNJYi4dKvEcybyH4_ZKvkPprgWoThCQki02a18RWrFLCQd704jI670XEoFyv2DyeKPcasSpRwOJiamrFXPlEuEXYXJ93bwZ_Qhk2tap5Hxn7wTZ2Pd8mXqT5zFScBPfs3Sp47FfU3kZXQxR-qb0U2xeFDyX36eKvL_HSngBVaJloSFPKGW8J8vLv9" alt="Cyrrus Health Logo" />
+      </div>
+
+      <!-- Kid Selector Dropdown -->
+      <div class="kid-selector-container">
+        <div class="kid-selector" (click)="toggleDropdown()">
+          <div class="kid-avatar">
+            <img [ngSrc]="activeChild().avatarUrl" width="40" height="40" [alt]="'Foto de ' + activeChild().name" priority />
+          </div>
+          <div class="kid-info">
+            <div class="name">{{ activeChild().name }}</div>
+            <div class="role">Portal dos Pais</div>
+          </div>
+          <span class="material-symbols-outlined arrow-icon" [class.open]="isDropdownOpen()">expand_more</span>
+        </div>
+
+        @if (isDropdownOpen()) {
+          <div class="kids-dropdown-list">
+            @for (kid of children(); track kid.id) {
+              <div class="dropdown-item" [class.active]="kid.id === activeChild().id" (click)="selectChild(kid.id)">
+                <div class="item-avatar">
+                  <img [ngSrc]="kid.avatarUrl" width="32" height="32" [alt]="'Foto de ' + kid.name" />
+                </div>
+                <div class="item-name">{{ kid.name }}</div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Links de Navegação -->
+      <nav class="nav-links">
+        <a routerLink="/dashboard" routerLinkActive="active-link" class="nav-item">
+          <span class="material-symbols-outlined">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+        <a routerLink="/timeline" routerLinkActive="active-link" class="nav-item">
+          <span class="material-symbols-outlined">event_note</span>
+          <span>Carteira de Vacinação</span>
+        </a>
+        <a routerLink="/family" routerLinkActive="active-link" class="nav-item">
+          <span class="material-symbols-outlined">family_restroom</span>
+          <span>Família</span>
+        </a>
+        <a routerLink="/campaigns" routerLinkActive="active-link" class="nav-item">
+          <span class="material-symbols-outlined">campaign</span>
+          <span>Campanhas</span>
+        </a>
+      </nav>
+
+      <!-- Rodapé do Menu -->
+      <div class="nav-footer">
+        <button aria-label="Configurações" (click)="showSettings()">
+          <span class="material-symbols-outlined">settings</span>
+        </button>
+        <button aria-label="Sair" class="logout-btn" (click)="logout()">
+          <span class="material-symbols-outlined">logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- TopNavBar (Desktop/Web) -->
+    <nav class="top-nav desktop-only-nav" aria-label="Navegação Superior Desktop">
+      <div class="logo-area"></div>
+      <div class="actions-area">
+        <div class="dependents-btn" routerLink="/family">
+          <span class="material-symbols-outlined btn-icon">family_restroom</span>
+          <span class="btn-text">Dependentes ({{ children().length }})</span>
+        </div>
+        <button aria-label="Notificações" (click)="showNotifications()">
+          <span class="material-symbols-outlined">notifications</span>
+        </button>
+        <button aria-label="Perfil do Usuário" routerLink="/family">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Canvas -->
+    <main class="main-canvas">
+      <ion-router-outlet></ion-router-outlet>
+    </main>
+
+    <!-- BottomNavBar (Celular e Tablet) -->
+    <nav class="bottom-nav mobile-only-nav" aria-label="Navegação Inferior Celular">
+      <a routerLink="/dashboard" routerLinkActive="active-link" class="bottom-item">
+        <span class="material-symbols-outlined">home</span>
+        <label>Início</label>
+      </a>
+      <a routerLink="/timeline" routerLinkActive="active-link" class="bottom-item">
+        <span class="material-symbols-outlined">history_edu</span>
+        <label>Histórico</label>
+      </a>
+      <a routerLink="/family" routerLinkActive="active-link" class="bottom-item">
+        <span class="material-symbols-outlined">group</span>
+        <label>Família</label>
+      </a>
+      <a routerLink="/campaigns" routerLinkActive="active-link" class="bottom-item">
+        <span class="material-symbols-outlined">announcement</span>
+        <label>Campanhas</label>
+      </a>
+    </nav>
+  </div>
+</ion-app>

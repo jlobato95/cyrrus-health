@@ -1,0 +1,100 @@
+/**
+ * Theme Variables - Cyrrus Health
+ * Mapped to Stitch UI colors and brand identity requirements.
+ */
+
+:root {
+  /** primary (Verde Oliva Claro / Saúde / Sucesso) **/
+  --ion-color-primary: #ABC270;
+  --ion-color-primary-rgb: 171, 194, 112;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #96ab63;
+  --ion-color-primary-tint: #b3c87e;
+
+  /** secondary (Laranja Suave / Pendência / Destaque) **/
+  --ion-color-secondary: #FDA769;
+  --ion-color-secondary-rgb: 253, 167, 105;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #df935c;
+  --ion-color-secondary-tint: #fdb887;
+
+  /** warning (Amarelo Claro / Atenção / Alerta Macio) **/
+  --ion-color-warning: #FEC868;
+  --ion-color-warning-rgb: 254, 200, 104;
+  --ion-color-warning-contrast: #473C33;
+  --ion-color-warning-contrast-rgb: 71, 60, 51;
+  --ion-color-warning-shade: #e0b05c;
+  --ion-color-warning-tint: #fed586;
+
+  /** dark (Marrom Escuro / Texto / Elementos Neutros) **/
+  --ion-color-dark: #473C33;
+  --ion-color-dark-rgb: 71, 60, 51;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #3e352d;
+  --ion-color-dark-tint: #594f46;
+
+  /** tertiary (Usada para status de alerta intermediário) **/
+  --ion-color-tertiary: #7d5700;
+  --ion-color-tertiary-rgb: 125, 87, 0;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #6e4c00;
+  --ion-color-tertiary-tint: #8a681a;
+
+  /** success (Saúde / Sucesso - mesmo Verde Oliva) **/
+  --ion-color-success: #ABC270;
+  --ion-color-success-rgb: 171, 194, 112;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #96ab63;
+  --ion-color-success-tint: #b3c87e;
+
+  /** danger (Erro crítico) **/
+  --ion-color-danger: #ba1a1a;
+  --ion-color-danger-rgb: 186, 26, 26;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #a41717;
+  --ion-color-danger-tint: #c13131;
+
+  /** medium (Tons neutros secundários) **/
+  --ion-color-medium: #76796a;
+  --ion-color-medium-rgb: 118, 121, 106;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #686a5d;
+  --ion-color-medium-tint: #848779;
+
+  /** light (Fundo suave - Off-White do Stitch) **/
+  --ion-color-light: #fff8f5;
+  --ion-color-light-rgb: 255, 248, 245;
+  --ion-color-light-contrast: #473C33;
+  --ion-color-light-contrast-rgb: 71, 60, 51;
+  --ion-color-light-shade: #e0dad7;
+  --ion-color-light-tint: #ffffff;
+
+  /** custom tokens from Stitch **/
+  --cyrrus-bg-off-white: #FAFAFA;
+  --cyrrus-surface-cream: #FFFDF9;
+  --cyrrus-surface-container: #fdebde;
+  --cyrrus-surface-container-low: #fff1e8;
+  --cyrrus-surface-container-high: #f7e5d8;
+  --cyrrus-surface-container-highest: #f1dfd2;
+  --cyrrus-surface-container-lowest: #ffffff;
+
+  --cyrrus-status-applied: #ABC270;
+  --cyrrus-status-pending: #FDA769;
+  --cyrrus-status-alert: #FEC868;
+
+  --ion-font-family: 'Hanken Grotesk', 'Helvetica Neue', sans-serif;
+}
+
+/* Aplicando a fonte globalmente */
+body {
+  font-family: var(--ion-font-family);
+  background-color: var(--cyrrus-bg-off-white);
+  color: var(--ion-color-dark);
+}

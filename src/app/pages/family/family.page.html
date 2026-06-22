@@ -1,0 +1,60 @@
+<ion-content [fullscreen]="true">
+  <div class="family-container">
+    <!-- Header -->
+    <header class="family-header">
+      <h1>Minha Família</h1>
+      <p>Selecione um perfil para gerenciar as vacinas.</p>
+    </header>
+
+    <!-- Dependentes Grid -->
+    <div class="family-grid">
+      @for (child of children(); track child.id) {
+        <app-child-card 
+          [child]="child" 
+          [isActive]="child.id === activeChild().id" 
+          (selected)="selectChild($event)">
+        </app-child-card>
+      }
+
+      <!-- Add Child Button -->
+      <div class="add-child-card" (click)="openAddModal()">
+        <div class="add-icon-wrapper">
+          <span class="material-symbols-outlined">add</span>
+        </div>
+        <h3>Adicionar Criança</h3>
+        <p>Criar um novo perfil para outro membro da família</p>
+      </div>
+    </div>
+
+    <!-- Modal Form (Overlay) -->
+    @if (isAddingChild()) {
+      <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(71, 60, 51, 0.4); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 16px;">
+        <div class="glass-panel" style="background: #ffffff; border-radius: 16px; width: 100%; max-width: 450px; box-shadow: 0 12px 40px rgba(0,0,0,0.15); overflow: hidden;">
+          <div class="modal-form">
+            <h2>Cadastrar Dependente</h2>
+            <p>Adicione um novo perfil infantil para controle de vacinas.</p>
+            
+            <div class="form-group">
+              <label for="child-name">Nome Completo</label>
+              <input type="text" id="child-name" placeholder="Ex: Leo Silva" [(ngModel)]="newChildName" name="childName" />
+            </div>
+
+            <div class="form-group">
+              <label for="child-age">Idade / Meses</label>
+              <input type="text" id="child-age" placeholder="Ex: 14 Meses ou 4 anos" [(ngModel)]="newChildAge" name="childAge" />
+            </div>
+
+            <div class="form-actions">
+              <ion-button fill="outline" color="dark" shape="round" (click)="closeAddModal()">
+                Cancelar
+              </ion-button>
+              <ion-button color="success" shape="round" (click)="saveChild()">
+                Salvar Perfil
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</ion-content>

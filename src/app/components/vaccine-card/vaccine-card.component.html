@@ -1,0 +1,24 @@
+<div class="vaccine-card" [class.applied]="vaccine.status === 'applied'" [class.pending]="vaccine.status === 'pending'" [class.alert]="vaccine.status === 'alert'">
+  <div class="card-header">
+    <div>
+      <h3>{{ vaccine.name }}</h3>
+      <p>{{ vaccine.dose }}</p>
+    </div>
+    <span class="status-badge">
+      {{ vaccine.status === 'applied' ? 'Aplicada' : vaccine.status === 'pending' ? 'Pendente' : 'Atrasada' }}
+    </span>
+  </div>
+
+  <div class="card-footer">
+    <div class="date-info" [class.alert-text]="vaccine.status === 'alert'">
+      <span class="material-symbols-outlined">{{ vaccine.dateIcon }}</span>
+      {{ vaccine.dateText }}
+    </div>
+
+    @if (vaccine.status !== 'applied') {
+      <ion-button size="small" color="primary" shape="round" (click)="onApplyClick()">
+        Aplicar
+      </ion-button>
+    }
+  </div>
+</div>
